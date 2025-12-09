@@ -1,0 +1,55 @@
+================================================================================
+SPK PEMILIHAN SERVER CLOUD TERBAIK PT KAJEK INDONESIA
+TOP 5 REKOMENDASI
+================================================================================
+
+Rank #1
+Vendor: IDCloudHost
+Paket: Cloud VPS Pro (8GB)
+CPU: 4 Core (Level: Rendah)
+RAM: 8 GB (Level: Sedang)
+Disk I/O Speed: 1250 MB/s (Level: Sangat Tinggi)
+Harga: $19.63/bulan (Level: Sangat Murah)
+Score TOPSIS: 0.7666
+--------------------------------------------------------------------------------
+
+Rank #2
+Vendor: Vultr
+Paket: Cloud Compute
+CPU: 4 Core (Level: Rendah)
+RAM: 8 GB (Level: Sedang)
+Disk I/O Speed: 1250 MB/s (Level: Sangat Tinggi)
+Harga: $48.00/bulan (Level: Murah)
+Score TOPSIS: 0.7104
+--------------------------------------------------------------------------------
+
+Rank #3
+Vendor: Alibaba Cloud
+Paket: ecs.g6.xlarge + 100GB
+CPU: 4 Core (Level: Rendah)
+RAM: 16 GB (Level: Tinggi)
+Disk I/O Speed: 1250 MB/s (Level: Sangat Tinggi)
+Harga: $82.00/bulan (Level: Sedang)
+Score TOPSIS: 0.6593
+--------------------------------------------------------------------------------
+
+Rank #4
+Vendor: Linode
+Paket: Shared Linode 8GB
+CPU: 4 Core (Level: Rendah)
+RAM: 8 GB (Level: Sedang)
+Disk I/O Speed: 625 MB/s (Level: Tinggi)
+Harga: $40.00/bulan (Level: Murah)
+Score TOPSIS: 0.5686
+--------------------------------------------------------------------------------
+
+Rank #5
+Vendor: Dewaweb
+Paket: Cloud VPS (Paket M)
+CPU: 6 Core (Level: Sedang)
+RAM: 16 GB (Level: Tinggi)
+Disk I/O Speed: 125 MB/s (Level: Sangat Rendah)
+Harga: $16.32/bulan (Level: Sangat Murah)
+Score TOPSIS: 0.5290
+--------------------------------------------------------------------------------
+

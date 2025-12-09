@@ -1,0 +1,21 @@
+Rank,No,Vendor,Nama Paket (Plan),CPU_val,CPU_Level,RAM_val,RAM_Level,DiskIO_val,DiskIO_Level,Price_val,Price_Level,Score
+1,4,IDCloudHost,Cloud VPS Pro (8GB),4,Rendah,8,Sedang,1250.0,Sangat Tinggi,19.63,Sangat Murah,0.7666480628182276
+2,13,Vultr,Cloud Compute,4,Rendah,8,Sedang,1250.0,Sangat Tinggi,48.0,Murah,0.7104385990812411
+3,17,Alibaba Cloud,ecs.g6.xlarge + 100GB,4,Rendah,16,Tinggi,1250.0,Sangat Tinggi,82.0,Sedang,0.659341849234776
+4,11,Linode,Shared Linode 8GB,4,Rendah,8,Sedang,625.0,Tinggi,40.0,Murah,0.5686446459923192
+5,3,Dewaweb,Cloud VPS (Paket M),6,Sedang,16,Tinggi,125.0,Sangat Rendah,16.32,Sangat Murah,0.5289938986475815
+6,12,DigitalOcean,Premium Droplet,4,Rendah,8,Sedang,500.0,Sedang,48.0,Murah,0.5054158067645466
+7,1,Hetzner,CPX31,4,Rendah,8,Sedang,125.0,Sangat Rendah,9.51,Sangat Murah,0.49875139994497086
+8,2,OVHcloud,VLE-4 (Comfort),4,Rendah,8,Sedang,125.0,Sangat Rendah,14.5,Sangat Murah,0.4889892062452515
+9,18,Google Cloud,e2-standard-4 + 100GB,4,Rendah,16,Tinggi,1000.0,Sangat Tinggi,128.0,Mahal,0.4806610487436838
+10,6,Biznet Gio,NEO Lite (MM.8.4),4,Rendah,8,Sedang,125.0,Sangat Rendah,21.78,Murah,0.4734501956705795
+11,7,Rumahweb,Cloud VPS 8GB,4,Rendah,8,Sedang,125.0,Sangat Rendah,24.54,Murah,0.46714915251011324
+12,8,DomaiNesia,Cloud VPS Cirrus 8GB,4,Rendah,8,Sedang,125.0,Sangat Rendah,25.52,Murah,0.46485703270426804
+13,5,Niagahoster,Cloud VPS KVM 8GB,4,Rendah,8,Sedang,12.5,Unknown,21.47,Murah,0.4529409268852503
+14,14,Tencent Cloud,S5.LARGE16 + 100GB,4,Rendah,16,Tinggi,187.5,Sangat Rendah,52.0,Sedang,0.4454871048423137
+15,15,Scaleway,PRO2-S,4,Rendah,16,Tinggi,187.5,Sangat Rendah,52.2,Sedang,0.44492495554540085
+16,9,Qwords,Cloud VPS KVM SC8,4,Rendah,8,Sedang,125.0,Sangat Rendah,33.74,Murah,0.4444922151281668
+17,10,Jagoan Hosting,Cloud VPS Mega,4,Rendah,8,Sedang,125.0,Sangat Rendah,39.45,Murah,0.42914204672263395
+18,16,UpCloud,General Purpose,4,Rendah,8,Sedang,125.0,Sangat Rendah,56.0,Sedang,0.37911336801693224
+19,19,AWS EC2,t3.xlarge + 100GB,4,Rendah,16,Tinggi,625.0,Tinggi,130.0,Mahal,0.362045820200022
+20,20,Azure,B4ms + 100GB,4,Rendah,16,Tinggi,12.5,Unknown,141.0,Mahal,0.18926683639454428
