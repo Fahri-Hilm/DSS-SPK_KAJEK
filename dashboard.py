@@ -367,109 +367,217 @@ with tab3:
         }), use_container_width=True, hide_index=True)
 
 with tab4:
-    st.markdown("### ✏️ Edit Data")
+    st.markdown("### ✏️ Edit & Tambah Data")
     
-    col1, col2 = st.columns([2, 1])
-    
-    with col1:
-        st.info("💡 Edit data di sini akan otomatis tersimpan ke Excel")
-    
-    with col2:
-        if st.button("🔄 Reload Data dari Excel", use_container_width=True):
-            st.cache_data.clear()
-            st.session_state.df_data = load_data()
-            st.success("✅ Data berhasil direload!")
-            st.rerun()
+    # Mode selector
+    mode = st.radio("", ["📝 Edit Alternatif", "➕ Tambah Alternatif Baru"], horizontal=True, label_visibility="collapsed")
     
     st.markdown("---")
     
-    # Pilih vendor untuk edit
-    vendors = st.session_state.df_data['Vendor'].tolist()
-    selected_vendor = st.selectbox("🔍 Pilih Provider untuk Edit:", vendors)
-    
-    # Get data vendor yang dipilih
-    idx = st.session_state.df_data[st.session_state.df_data['Vendor'] == selected_vendor].index[0]
-    current_data = st.session_state.df_data.loc[idx]
-    
-    st.markdown(f"### Editing: **{current_data['Vendor']}** - {current_data['Nama Paket (Plan)']}")
-    
-    # Form edit dengan 4 kolom
-    col1, col2, col3, col4 = st.columns(4)
-    
-    with col1:
-        st.markdown("**🔧 CPU Level**")
-        cpu_level = st.selectbox(
-            "Level",
-            options=[1, 2, 3, 4, 5],
-            index=int(current_data['CPU_Level'])-1,
-            format_func=lambda x: f"⭐{x} ({[2,4,6,8,10][x-1]} vCPU)",
-            key="cpu_edit"
-        )
-    
-    with col2:
-        st.markdown("**💾 RAM Level**")
-        ram_level = st.selectbox(
-            "Level",
-            options=[1, 2, 3, 4, 5],
-            index=int(current_data['RAM_Level'])-1,
-            format_func=lambda x: f"⭐{x} ({[2,4,8,16,32][x-1]} GB)",
-            key="ram_edit"
-        )
-    
-    with col3:
-        st.markdown("**💿 Disk I/O Level**")
-        diskio_level = st.selectbox(
-            "Level",
-            options=[1, 2, 3, 4, 5],
-            index=int(current_data['DiskIO_Level'])-1,
-            format_func=lambda x: f"⭐{x} ({[150,300,500,700,1000][x-1]} MB/s)",
-            key="diskio_edit"
-        )
-    
-    with col4:
-        st.markdown("**💰 Harga Level**")
-        price_level = st.selectbox(
-            "Level",
-            options=[1, 2, 3, 4, 5],
-            index=int(current_data['Price_Level'])-1,
-            format_func=lambda x: f"💰{x} (${[15,35,75,150,250][x-1]})",
-            key="price_edit"
-        )
-    
-    st.markdown("---")
-    
-    # Tombol save
-    col1, col2, col3 = st.columns([1, 1, 1])
-    
-    with col2:
-        if st.button("💾 Simpan ke Excel", type="primary", use_container_width=True):
-            try:
-                # Load Excel
-                df_excel = pd.read_excel('TOPSIS_Input_Level.xlsx', sheet_name='1. Input Level', skiprows=2)
-                df_excel.columns = ['No', 'Vendor', 'Nama Paket (Plan)', 'CPU_Level', 'RAM_Level', 'DiskIO_Level', 'Price_Level']
-                
-                # Update data
-                excel_idx = df_excel[df_excel['Vendor'] == selected_vendor].index[0]
-                df_excel.loc[excel_idx, 'CPU_Level'] = cpu_level
-                df_excel.loc[excel_idx, 'RAM_Level'] = ram_level
-                df_excel.loc[excel_idx, 'DiskIO_Level'] = diskio_level
-                df_excel.loc[excel_idx, 'Price_Level'] = price_level
-                
-                # Save ke Excel
-                with pd.ExcelWriter('TOPSIS_Input_Level.xlsx', mode='a', if_sheet_exists='overlay', engine='openpyxl') as writer:
-                    # Write data mulai dari row 3 (setelah header)
-                    df_excel.to_excel(writer, sheet_name='1. Input Level', startrow=2, index=False, header=False)
-                
-                # Reload data
+    if mode == "📝 Edit Alternatif":
+        col1, col2 = st.columns([2, 1])
+        
+        with col1:
+            st.info("💡 Edit data di sini akan otomatis tersimpan ke Excel")
+        
+        with col2:
+            if st.button("🔄 Reload Data dari Excel", use_container_width=True):
                 st.cache_data.clear()
                 st.session_state.df_data = load_data()
-                
-                st.success(f"✅ Data **{selected_vendor}** berhasil disimpan ke Excel!")
-                st.balloons()
+                st.success("✅ Data berhasil direload!")
                 st.rerun()
-                
-            except Exception as e:
-                st.error(f"❌ Error: {str(e)}")
+        
+        st.markdown("---")
+        
+        # Pilih vendor untuk edit
+        vendors = st.session_state.df_data['Vendor'].tolist()
+        selected_vendor = st.selectbox("🔍 Pilih Provider untuk Edit:", vendors)
+        
+        # Get data vendor yang dipilih
+        idx = st.session_state.df_data[st.session_state.df_data['Vendor'] == selected_vendor].index[0]
+        current_data = st.session_state.df_data.loc[idx]
+        
+        st.markdown(f"### Editing: **{current_data['Vendor']}** - {current_data['Nama Paket (Plan)']}")
+        
+        # Form edit dengan 4 kolom
+        col1, col2, col3, col4 = st.columns(4)
+        
+        with col1:
+            st.markdown("**🔧 CPU Level**")
+            cpu_level = st.selectbox(
+                "Level",
+                options=[1, 2, 3, 4, 5],
+                index=int(current_data['CPU_Level'])-1,
+                format_func=lambda x: f"⭐{x} ({[2,4,6,8,10][x-1]} vCPU)",
+                key="cpu_edit"
+            )
+        
+        with col2:
+            st.markdown("**💾 RAM Level**")
+            ram_level = st.selectbox(
+                "Level",
+                options=[1, 2, 3, 4, 5],
+                index=int(current_data['RAM_Level'])-1,
+                format_func=lambda x: f"⭐{x} ({[2,4,8,16,32][x-1]} GB)",
+                key="ram_edit"
+            )
+        
+        with col3:
+            st.markdown("**💿 Disk I/O Level**")
+            diskio_level = st.selectbox(
+                "Level",
+                options=[1, 2, 3, 4, 5],
+                index=int(current_data['DiskIO_Level'])-1,
+                format_func=lambda x: f"⭐{x} ({[150,300,500,700,1000][x-1]} MB/s)",
+                key="diskio_edit"
+            )
+        
+        with col4:
+            st.markdown("**💰 Harga Level**")
+            price_level = st.selectbox(
+                "Level",
+                options=[1, 2, 3, 4, 5],
+                index=int(current_data['Price_Level'])-1,
+                format_func=lambda x: f"💰{x} (${[15,35,75,150,250][x-1]})",
+                key="price_edit"
+            )
+        
+        st.markdown("---")
+        
+        # Tombol save
+        col1, col2, col3 = st.columns([1, 1, 1])
+        
+        with col2:
+            if st.button("💾 Simpan ke Excel", type="primary", use_container_width=True):
+                try:
+                    # Load Excel
+                    df_excel = pd.read_excel('TOPSIS_Input_Level.xlsx', sheet_name='1. Input Level', skiprows=2)
+                    df_excel.columns = ['No', 'Vendor', 'Nama Paket (Plan)', 'CPU_Level', 'RAM_Level', 'DiskIO_Level', 'Price_Level']
+                    
+                    # Update data
+                    excel_idx = df_excel[df_excel['Vendor'] == selected_vendor].index[0]
+                    df_excel.loc[excel_idx, 'CPU_Level'] = cpu_level
+                    df_excel.loc[excel_idx, 'RAM_Level'] = ram_level
+                    df_excel.loc[excel_idx, 'DiskIO_Level'] = diskio_level
+                    df_excel.loc[excel_idx, 'Price_Level'] = price_level
+                    
+                    # Save ke Excel
+                    with pd.ExcelWriter('TOPSIS_Input_Level.xlsx', mode='a', if_sheet_exists='overlay', engine='openpyxl') as writer:
+                        df_excel.to_excel(writer, sheet_name='1. Input Level', startrow=2, index=False, header=False)
+                    
+                    # Reload data
+                    st.cache_data.clear()
+                    st.session_state.df_data = load_data()
+                    
+                    st.success(f"✅ Data **{selected_vendor}** berhasil disimpan ke Excel!")
+                    st.balloons()
+                    st.rerun()
+                    
+                except Exception as e:
+                    st.error(f"❌ Error: {str(e)}")
+    
+    else:  # Tambah Alternatif Baru
+        st.markdown("### ➕ Tambah Alternatif Baru")
+        st.info("💡 Alternatif baru akan ditambahkan ke Excel")
+        
+        col1, col2 = st.columns(2)
+        
+        with col1:
+            new_vendor = st.text_input("🏢 Nama Vendor", placeholder="Contoh: AWS")
+            new_paket = st.text_input("📦 Nama Paket", placeholder="Contoh: t3.medium")
+        
+        with col2:
+            st.write("")  # Spacing
+        
+        st.markdown("#### Pilih Level untuk Setiap Kriteria")
+        
+        col1, col2, col3, col4 = st.columns(4)
+        
+        with col1:
+            st.markdown("**🔧 CPU Level**")
+            new_cpu_level = st.selectbox(
+                "Level",
+                options=[1, 2, 3, 4, 5],
+                index=2,
+                format_func=lambda x: f"⭐{x} ({[2,4,6,8,10][x-1]} vCPU)",
+                key="cpu_new"
+            )
+        
+        with col2:
+            st.markdown("**💾 RAM Level**")
+            new_ram_level = st.selectbox(
+                "Level",
+                options=[1, 2, 3, 4, 5],
+                index=2,
+                format_func=lambda x: f"⭐{x} ({[2,4,8,16,32][x-1]} GB)",
+                key="ram_new"
+            )
+        
+        with col3:
+            st.markdown("**💿 Disk I/O Level**")
+            new_diskio_level = st.selectbox(
+                "Level",
+                options=[1, 2, 3, 4, 5],
+                index=2,
+                format_func=lambda x: f"⭐{x} ({[150,300,500,700,1000][x-1]} MB/s)",
+                key="diskio_new"
+            )
+        
+        with col4:
+            st.markdown("**💰 Harga Level**")
+            new_price_level = st.selectbox(
+                "Level",
+                options=[1, 2, 3, 4, 5],
+                index=2,
+                format_func=lambda x: f"💰{x} (${[15,35,75,150,250][x-1]})",
+                key="price_new"
+            )
+        
+        st.markdown("---")
+        
+        # Tombol tambah
+        col1, col2, col3 = st.columns([1, 1, 1])
+        
+        with col2:
+            if st.button("➕ Tambah ke Excel", type="primary", use_container_width=True):
+                if new_vendor and new_paket:
+                    try:
+                        # Load Excel
+                        df_excel = pd.read_excel('TOPSIS_Input_Level.xlsx', sheet_name='1. Input Level', skiprows=2)
+                        df_excel.columns = ['No', 'Vendor', 'Nama Paket (Plan)', 'CPU_Level', 'RAM_Level', 'DiskIO_Level', 'Price_Level']
+                        df_excel = df_excel.dropna(subset=['Vendor'])
+                        
+                        # Buat row baru
+                        new_no = len(df_excel) + 1
+                        new_row = pd.DataFrame({
+                            'No': [new_no],
+                            'Vendor': [new_vendor],
+                            'Nama Paket (Plan)': [new_paket],
+                            'CPU_Level': [new_cpu_level],
+                            'RAM_Level': [new_ram_level],
+                            'DiskIO_Level': [new_diskio_level],
+                            'Price_Level': [new_price_level]
+                        })
+                        
+                        # Append row baru
+                        df_excel = pd.concat([df_excel, new_row], ignore_index=True)
+                        
+                        # Save ke Excel
+                        with pd.ExcelWriter('TOPSIS_Input_Level.xlsx', mode='a', if_sheet_exists='overlay', engine='openpyxl') as writer:
+                            df_excel.to_excel(writer, sheet_name='1. Input Level', startrow=2, index=False, header=False)
+                        
+                        # Reload data
+                        st.cache_data.clear()
+                        st.session_state.df_data = load_data()
+                        
+                        st.success(f"✅ Alternatif **{new_vendor} - {new_paket}** berhasil ditambahkan!")
+                        st.balloons()
+                        st.rerun()
+                        
+                    except Exception as e:
+                        st.error(f"❌ Error: {str(e)}")
+                else:
+                    st.error("⚠️ Nama Vendor dan Paket harus diisi!")
     
     st.markdown("---")
     
@@ -478,6 +586,8 @@ with tab4:
     preview_df = st.session_state.df_data[['Vendor', 'Nama Paket (Plan)', 'CPU_Level', 'RAM_Level', 'DiskIO_Level', 'Price_Level']].copy()
     preview_df.columns = ['Vendor', 'Paket', 'CPU Lvl', 'RAM Lvl', 'I/O Lvl', 'Harga Lvl']
     st.dataframe(preview_df, use_container_width=True, height=400)
+    
+    st.caption(f"Total: {len(preview_df)} alternatif")
 
 with tab5:
     st.markdown("### 📁 Data Lengkap")
