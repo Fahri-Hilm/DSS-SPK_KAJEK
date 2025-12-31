@@ -1,0 +1,49 @@
+[
+  {
+    "id": 1,
+    "timestamp": "2026-01-01T02:04:14.492683",
+    "title": "Analisa Awal 2025",
+    "description": "",
+    "weights": {
+      "cpu": 0.25,
+      "ram": 0.25,
+      "disk": 0.25,
+      "price": 0.25
+    },
+    "total_alternatives": 21,
+    "top_vendor": "IDCloudHost",
+    "top_score": 0.7452,
+    "rankings": [
+      {
+        "Rank": 1,
+        "Vendor": "IDCloudHost",
+        "Nama Paket (Plan)": "Cloud VPS Pro (8GB)",
+        "Score": 0.7451893686145887
+      },
+      {
+        "Rank": 2,
+        "Vendor": "Vultr",
+        "Nama Paket (Plan)": "Cloud Compute",
+        "Score": 0.718288417941648
+      },
+      {
+        "Rank": 3,
+        "Vendor": "Alibaba Cloud",
+        "Nama Paket (Plan)": "ecs.g6.xlarge + 100GB",
+        "Score": 0.6811313325341534
+      },
+      {
+        "Rank": 4,
+        "Vendor": "Linode",
+        "Nama Paket (Plan)": "Shared Linode 8GB",
+        "Score": 0.6436404736513365
+      },
+      {
+        "Rank": 5,
+        "Vendor": "DigitalOcean",
+        "Nama Paket (Plan)": "Premium Droplet",
+        "Score": 0.5708705149793272
+      }
+    ]
+  }
+]

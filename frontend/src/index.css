@@ -1,0 +1,106 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Dark Theme (default) */
+.dark {
+  --bg-primary: #0f1219;
+  --bg-secondary: #1a1f2e;
+  --bg-tertiary: #252d3d;
+  --text-primary: #f1f5f9;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  --border-color: #334155;
+}
+
+/* Light Theme */
+.light {
+  --bg-primary: #f8fafc;
+  --bg-secondary: #ffffff;
+  --bg-tertiary: #f1f5f9;
+  --text-primary: #1e293b;
+  --text-secondary: #475569;
+  --text-muted: #94a3b8;
+  --border-color: #e2e8f0;
+}
+
+:root {
+  font-family: 'Inter', sans-serif;
+}
+
+body {
+  margin: 0;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Light mode overrides for components */
+.light .bg-dark-800 {
+  background-color: var(--bg-secondary);
+}
+
+.light .bg-dark-900 {
+  background-color: var(--bg-tertiary);
+}
+
+.light .bg-dark-700 {
+  background-color: #e2e8f0;
+}
+
+.light .bg-dark-600 {
+  background-color: #cbd5e1;
+}
+
+.light .border-dark-700 {
+  border-color: var(--border-color);
+}
+
+.light .border-dark-600 {
+  border-color: #cbd5e1;
+}
+
+.light .text-white {
+  color: var(--text-primary);
+}
+
+.light .text-slate-300 {
+  color: var(--text-secondary);
+}
+
+.light .text-slate-400 {
+  color: var(--text-muted);
+}
+
+.light .text-slate-500 {
+  color: #94a3b8;
+}
+
+.light .hover\:bg-dark-700:hover {
+  background-color: #e2e8f0;
+}
+
+.light .hover\:bg-dark-600:hover {
+  background-color: #cbd5e1;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-tertiary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
