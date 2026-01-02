@@ -1,0 +1,99 @@
+[
+  {
+    "id": 2,
+    "timestamp": "2026-01-03T01:12:30.436632",
+    "title": "VPS q1 day2",
+    "description": "",
+    "tags": [
+      "Web"
+    ],
+    "weights": {
+      "cpu": 0.25,
+      "ram": 0.25,
+      "disk": 0.25,
+      "price": 0.25
+    },
+    "total_alternatives": 20,
+    "top_vendor": "IDCloudHost",
+    "top_score": 0.7453,
+    "rankings": [
+      {
+        "Rank": 1,
+        "Vendor": "IDCloudHost",
+        "Nama Paket (Plan)": "Cloud VPS Pro (8GB)",
+        "Score": 0.7453174529890177
+      },
+      {
+        "Rank": 2,
+        "Vendor": "Vultr",
+        "Nama Paket (Plan)": "Cloud Compute",
+        "Score": 0.7182960277985537
+      },
+      {
+        "Rank": 3,
+        "Vendor": "Alibaba Cloud",
+        "Nama Paket (Plan)": "ecs.g6.xlarge + 100GB",
+        "Score": 0.6788616194560021
+      },
+      {
+        "Rank": 4,
+        "Vendor": "Linode",
+        "Nama Paket (Plan)": "Shared Linode 8GB",
+        "Score": 0.6440247729308097
+      },
+      {
+        "Rank": 5,
+        "Vendor": "DigitalOcean",
+        "Nama Paket (Plan)": "Premium Droplet",
+        "Score": 0.5715923813906103
+      }
+    ]
+  },
+  {
+    "id": 1,
+    "timestamp": "2026-01-02T18:32:17.722500",
+    "title": "Analisa q1",
+    "description": "",
+    "weights": {
+      "cpu": 0.25,
+      "ram": 0.25,
+      "disk": 0.25,
+      "price": 0.25
+    },
+    "total_alternatives": 20,
+    "top_vendor": "IDCloudHost",
+    "top_score": 0.7453,
+    "rankings": [
+      {
+        "Rank": 1,
+        "Vendor": "IDCloudHost",
+        "Nama Paket (Plan)": "Cloud VPS Pro (8GB)",
+        "Score": 0.7453174529890177
+      },
+      {
+        "Rank": 2,
+        "Vendor": "Vultr",
+        "Nama Paket (Plan)": "Cloud Compute",
+        "Score": 0.7182960277985537
+      },
+      {
+        "Rank": 3,
+        "Vendor": "Alibaba Cloud",
+        "Nama Paket (Plan)": "ecs.g6.xlarge + 100GB",
+        "Score": 0.6788616194560021
+      },
+      {
+        "Rank": 4,
+        "Vendor": "Linode",
+        "Nama Paket (Plan)": "Shared Linode 8GB",
+        "Score": 0.6440247729308097
+      },
+      {
+        "Rank": 5,
+        "Vendor": "DigitalOcean",
+        "Nama Paket (Plan)": "Premium Droplet",
+        "Score": 0.5715923813906103
+      }
+    ]
+  }
+]

@@ -1,12 +1,16 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Depends, status
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 import pandas as pd
 import numpy as np
 import os
 import json
-from datetime import datetime
+import hashlib
+import secrets
+from datetime import datetime, timedelta
 from typing import List, Optional
 from pydantic import BaseModel
+from jose import JWTError, jwt
 
 app = FastAPI(title="SPK Kajek API")
 
@@ -22,6 +26,15 @@ app.add_middleware(
 DATA_FILE = "TOPSIS_Input_Level.xlsx"
 CSV_FILE = "No-Vendor-NamaPaketPlan-CPU-RAM-DiskIOSpeed-HargaBulanUSD.csv"
 HISTORY_FILE = "calculation_history.json"
+USERS_FILE = "users.json"
+
+# JWT Configuration
+SECRET_KEY = "your-secret-key-here-change-in-production-09f26e094faa6ca2556c818166b7a9563b93f7099f6f0f4caa6cf63b88e8d3e7"
+ALGORITHM = "HS256"
+ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 24  # 24 hours
+
+# Security
+security = HTTPBearer()
 
 class WeightRequest(BaseModel):
     cpu: float
@@ -36,6 +49,201 @@ class VendorData(BaseModel):
     ram_level: int
     diskio_level: int
     price_level: int
+
+class LoginRequest(BaseModel):
+    username: str
+    password: str
+
+class Token(BaseModel):
+    access_token: str
+    token_type: str
+    user: dict
+
+class UserProfile(BaseModel):
+    username: str
+    email: str
+    display_name: str
+
+class UpdateProfile(BaseModel):
+    email: str
+    display_name: str
+
+class ChangePassword(BaseModel):
+    old_password: str
+    new_password: str
+
+# ==================== AUTH UTILITIES ====================
+
+def hash_password(password: str) -> str:
+    """Hash a password using PBKDF2 with SHA-256"""
+    # Generate a random salt
+    salt = secrets.token_hex(16)
+    # Hash the password with the salt
+    pwd_hash = hashlib.pbkdf2_hmac('sha256', password.encode('utf-8'), salt.encode('utf-8'), 100000)
+    # Return salt and hash combined
+    return f"{salt}${pwd_hash.hex()}"
+
+def verify_password(plain_password: str, hashed_password: str) -> bool:
+    """Verify a password against a hash"""
+    try:
+        salt, pwd_hash = hashed_password.split('$')
+        # Hash the provided password with the same salt
+        new_hash = hashlib.pbkdf2_hmac('sha256', plain_password.encode('utf-8'), salt.encode('utf-8'), 100000)
+        # Compare hashes
+        return new_hash.hex() == pwd_hash
+    except Exception:
+        return False
+
+
+def load_users():
+    """Load users from JSON file"""
+    if os.path.exists(USERS_FILE):
+        with open(USERS_FILE, 'r') as f:
+            return json.load(f)
+    # Create default admin user if file doesn't exist
+    default_users = {
+        "admin": {
+            "username": "admin",
+            "password": hash_password("admin123"),
+            "email": "admin@spk-kajek.com",
+            "display_name": "Administrator"
+        }
+    }
+    save_users(default_users)
+    return default_users
+
+def save_users(users):
+    """Save users to JSON file"""
+    with open(USERS_FILE, 'w') as f:
+        json.dump(users, f, indent=2, ensure_ascii=False)
+
+def create_access_token(data: dict, expires_delta: timedelta = None):
+    """Create a JWT access token"""
+    to_encode = data.copy()
+    if expires_delta:
+        expire = datetime.utcnow() + expires_delta
+    else:
+        expire = datetime.utcnow() + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+    to_encode.update({"exp": expire})
+    encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
+    return encoded_jwt
+
+def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(security)):
+    """Dependency to get current authenticated user"""
+    credentials_exception = HTTPException(
+        status_code=status.HTTP_401_UNAUTHORIZED,
+        detail="Could not validate credentials",
+        headers={"WWW-Authenticate": "Bearer"},
+    )
+    try:
+        token = credentials.credentials
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        username: str = payload.get("sub")
+        if username is None:
+            raise credentials_exception
+        
+        users = load_users()
+        if username not in users:
+            raise credentials_exception
+        
+        return users[username]
+    except JWTError:
+        raise credentials_exception
+
+# ==================== AUTH ENDPOINTS ====================
+
+@app.post("/api/login", response_model=Token)
+def login(login_data: LoginRequest):
+    """Authenticate user and return JWT token"""
+    users = load_users()
+    
+    # Check if user exists
+    if login_data.username not in users:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Incorrect username or password"
+        )
+    
+    user = users[login_data.username]
+    
+    # Verify password
+    if not verify_password(login_data.password, user["password"]):
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Incorrect username or password"
+        )
+    
+    # Create access token
+    access_token = create_access_token(data={"sub": user["username"]})
+    
+    return {
+        "access_token": access_token,
+        "token_type": "bearer",
+        "user": {
+            "username": user["username"],
+            "email": user["email"],
+            "display_name": user["display_name"]
+        }
+    }
+
+@app.get("/api/profile", response_model=UserProfile)
+def get_profile(current_user: dict = Depends(get_current_user)):
+    """Get current user profile"""
+    return {
+        "username": current_user["username"],
+        "email": current_user["email"],
+        "display_name": current_user["display_name"]
+    }
+
+@app.put("/api/profile")
+def update_profile(profile: UpdateProfile, current_user: dict = Depends(get_current_user)):
+    """Update user profile"""
+    users = load_users()
+    username = current_user["username"]
+    
+    # Update user data
+    users[username]["email"] = profile.email
+    users[username]["display_name"] = profile.display_name
+    
+    # Save changes
+    save_users(users)
+    
+    return {
+        "message": "Profile updated successfully",
+        "user": {
+            "username": username,
+            "email": profile.email,
+            "display_name": profile.display_name
+        }
+    }
+
+@app.post("/api/change-password")
+def change_password(password_data: ChangePassword, current_user: dict = Depends(get_current_user)):
+    """Change user password"""
+    users = load_users()
+    username = current_user["username"]
+    
+    # Verify old password
+    if not verify_password(password_data.old_password, users[username]["password"]):
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Old password is incorrect"
+        )
+    
+    # Validate new password
+    if len(password_data.new_password) < 6:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="New password must be at least 6 characters"
+        )
+    
+    # Update password
+    users[username]["password"] = hash_password(password_data.new_password)
+    
+    # Save changes
+    save_users(users)
+    
+    return {"message": "Password changed successfully"}
 
 @app.get("/")
 def read_root():
@@ -351,6 +559,7 @@ class HistoryEntry(BaseModel):
     title: str
     description: Optional[str] = ""
     weights: WeightRequest
+    tags: Optional[List[str]] = []
     
 @app.get("/api/history")
 def get_history():
@@ -410,6 +619,7 @@ def save_calculation(entry: HistoryEntry):
             "timestamp": datetime.now().isoformat(),
             "title": entry.title,
             "description": entry.description,
+            "tags": entry.tags,
             "weights": {
                 "cpu": entry.weights.cpu,
                 "ram": entry.weights.ram,

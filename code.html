@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="id"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SPK KAJEK - Masuk</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#8B5CF6", // Purple-500, a bright accent
+                        "primary-hover": "#7C3AED", // Purple-600
+                        "background-dark": "#0A0A0A", // Near black for deep contrast
+                        "surface-dark": "#151515", // Darker base for structural elements
+                        "surface-accent": "#262626", // Slightly lighter dark for details
+                        "border-dark": "#363636", // Subtle dark border
+                        "text-light": "#E0E0E0", // Light gray for general text
+                        "text-muted": "#A0A0A0", // Muted gray for secondary text
+                        "accent-bright": "#3B82F6", // Blue-500, for strategic bright accents
+                        "success": "#22C55E", // Green-500
+                    },
+                    fontFamily: {
+                        display: ["Inter", "sans-serif"],
+                        body: ["Inter", "sans-serif"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.5rem", // Sharp but slightly rounded
+                        'lg': "0.75rem",
+                        'xl': "1rem",
+                        '2xl': "1.5rem",
+                        '3xl': "2rem",
+                    },
+                    boxShadow: {
+                        'deep': '0 10px 30px rgba(0, 0, 0, 0.5), 0 0 10px rgba(0, 0, 0, 0.3)',
+                        'inner-deep': 'inset 0 2px 8px rgba(0, 0, 0, 0.6)',
+                        'accent-glow': '0 0 15px rgba(139, 92, 246, 0.4)',
+                    },
+                    animation: {
+                        'pulse-subtle': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                },
+            },
+        };
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .text-gradient {
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-image: linear-gradient(to right, #60a5fa, #a855f7);
+        }
+        .structural-gradient-dark {
+            background: linear-gradient(135deg, var(--surface-dark) 0%, var(--surface-accent) 100%);
+        }
+        .structural-shadow {
+            box-shadow: 
+                -8px -8px 16px rgba(45, 55, 72, 0.1),8px 8px 16px rgba(0, 0, 0, 0.4),inset 0 0 10px rgba(0, 0, 0, 0.2);}
+        .input-dark-structural {
+            background-color: var(--surface-dark);
+            border: 1px solid var(--border-dark);
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.6);
+        }
+        .input-dark-structural:focus {
+            border-color: var(--primary);
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.6), 0 0 0 2px rgba(139, 92, 246, 0.3);
+        }
+        .btn-structural {
+            background: linear-gradient(145deg, var(--primary), var(--primary-hover));
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4), 0 0 8px rgba(139, 92, 246, 0.3);
+            transition: all 0.2s ease-in-out;
+        }
+        .btn-structural:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6), 0 0 12px rgba(139, 92, 246, 0.5);
+        }
+        .btn-structural:active {
+            transform: translateY(0);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3), 0 0 5px rgba(139, 92, 246, 0.2);
+        }
+    </style>
+</head>
+<body class="bg-background-dark text-text-light h-screen w-full flex items-center justify-center overflow-hidden relative selection:bg-primary selection:text-white">
+<div class="absolute inset-0 bg-grid-slate-800/[0.08] dark:bg-grid-slate-900/[0.1] opacity-50" style="background-size: 30px 30px;"></div>
+<div class="absolute inset-0 bg-gradient-to-br from-black/80 via-black/50 to-transparent"></div>
+<div class="absolute -bottom-1/3 -left-1/4 w-[500px] h-[500px] bg-accent-bright/10 rounded-full mix-blend-screen filter blur-3xl opacity-30 animate-pulse-subtle"></div>
+<div class="absolute -top-1/3 -right-1/4 w-[600px] h-[600px] bg-primary/10 rounded-full mix-blend-screen filter blur-3xl opacity-30 animate-pulse-subtle animation-delay-2000"></div>
+<div class="container max-w-7xl mx-auto px-4 py-8 flex items-center justify-center min-h-screen relative z-10">
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-20 w-full max-w-6xl items-center">
+<div class="hidden lg:flex flex-col justify-center space-y-10 pr-16">
+<div class="space-y-6">
+<div class="flex items-center space-x-4 mb-8">
+<div class="w-14 h-14 bg-primary rounded-xl flex items-center justify-center shadow-accent-glow">
+<span class="material-symbols-outlined text-white text-3xl">analytics</span>
+</div>
+<h1 class="text-4xl font-bold tracking-wider text-white">SPK KAJEK</h1>
+</div>
+<h2 class="text-6xl font-extrabold leading-tight text-white">
+                        Benteng Digital <br/>
+<span class="text-accent-bright drop-shadow-lg">Analisis Vendor</span>
+</h2>
+<p class="text-xl text-text-muted max-w-md">
+                        Masuk untuk menjelajahi data dengan presisi. Platform aman Anda untuk wawasan terbaik.
+                    </p>
+</div>
+<div class="relative mt-16 group perspective-1000">
+<div class="relative bg-surface-dark p-8 rounded-2xl border border-border-dark shadow-deep transform transition-transform duration-500 group-hover:scale-[1.01] group-hover:-rotate-1">
+<div class="flex items-center justify-between mb-8">
+<div class="h-10 w-10 rounded-lg bg-accent-bright/20 flex items-center justify-center border border-accent-bright/50">
+<span class="material-symbols-outlined text-accent-bright text-xl">security</span>
+</div>
+<div class="h-3 w-28 bg-border-dark rounded-full animate-pulse-subtle"></div>
+</div>
+<div class="space-y-4">
+<div class="h-28 bg-surface-accent rounded-xl w-full"></div>
+<div class="flex gap-4">
+<div class="h-20 bg-surface-accent rounded-xl w-1/2"></div>
+<div class="h-20 bg-surface-accent rounded-xl w-1/2"></div>
+</div>
+</div>
+<div class="absolute -top-6 -right-6 bg-surface-accent border border-border-dark px-5 py-3 rounded-lg shadow-deep animate-pulse-subtle">
+<div class="flex items-center gap-3">
+<span class="w-3 h-3 rounded-full bg-success animate-pulse"></span>
+<span class="text-sm font-medium text-white">Sistem Aman</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="w-full max-w-md mx-auto relative z-10">
+<div class="absolute -inset-2 bg-gradient-to-br from-primary to-accent-bright rounded-3xl blur-xl opacity-30"></div>
+<div class="relative bg-surface-dark structural-gradient-dark rounded-3xl p-10 shadow-deep border border-border-dark">
+<div class="lg:hidden flex justify-center mb-10">
+<div class="w-14 h-14 bg-primary rounded-xl flex items-center justify-center shadow-lg shadow-primary/40">
+<span class="material-symbols-outlined text-white text-3xl">analytics</span>
+</div>
+</div>
+<div class="mb-10 text-center">
+<h3 class="text-3xl font-extrabold text-white mb-3">Selamat Datang Kembali!</h3>
+<p class="text-text-muted text-md">Masuk untuk mengakses dasbor Anda.</p>
+</div>
+<form action="#" class="space-y-8" method="POST">
+<div class="space-y-3">
+<label class="text-sm font-medium text-text-light" for="username">Nama Pengguna atau Email</label>
+<div class="relative group">
+<div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-text-muted group-focus-within:text-primary transition-colors text-xl">person</span>
+</div>
+<input class="block w-full pl-12 pr-4 py-3.5 input-dark-structural rounded-lg text-text-light placeholder-text-muted focus:outline-none transition-all duration-200 text-sm" id="username" name="username" placeholder="admin@spkkajek.com" required="" type="text"/>
+</div>
+</div>
+<div class="space-y-3">
+<div class="flex items-center justify-between">
+<label class="text-sm font-medium text-text-light" for="password">Kata Sandi</label>
+</div>
+<div class="relative group">
+<div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-text-muted group-focus-within:text-primary transition-colors text-xl">lock</span>
+</div>
+<input class="block w-full pl-12 pr-12 py-3.5 input-dark-structural rounded-lg text-text-light placeholder-text-muted focus:outline-none transition-all duration-200 text-sm" id="password" name="password" placeholder="••••••••" required="" type="password"/>
+<div class="absolute inset-y-0 right-0 pr-4 flex items-center cursor-pointer hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-text-muted text-xl">visibility</span>
+</div>
+</div>
+<div class="flex justify-end">
+<a class="text-xs font-medium text-accent-bright hover:text-primary-hover transition-colors" href="#">Lupa Kata Sandi?</a>
+</div>
+</div>
+<button class="w-full flex justify-center items-center py-4 px-4 rounded-lg btn-structural text-md font-bold text-white uppercase tracking-wide focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary focus:ring-offset-surface-dark" type="submit">
+                            Masuk ke Dasbor
+                            <span class="material-symbols-outlined ml-3 text-lg">arrow_forward</span>
+</button>
+</form>
+<div class="relative my-10">
+<div class="absolute inset-0 flex items-center">
+<div class="w-full border-t border-border-dark"></div>
+</div>
+<div class="relative flex justify-center text-sm">
+<span class="px-3 bg-surface-dark text-text-muted font-medium">Atau lanjutkan dengan</span>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<button class="flex items-center justify-center px-4 py-3 border border-border-dark rounded-lg shadow-deep bg-surface-accent text-sm font-medium text-text-light hover:bg-surface-dark focus:outline-none transition-colors" type="button">
+<img alt="Logo Google" class="h-5 w-5 mr-3" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDhTwrUyCcXC52WsSkp-58MPG_ZfXzBDdkqlZb9LXl2o_tFjUTcrKDtpyOL6itincgsRT94mV4aNjmnJC6jz4XlGtyA33v7LHIL42KMG7m8ZsvxuGlAP9X5l8vUs3t29bjPSFRcKBH-FV35A9-PxjSFcpq0pO2dByLeYR0dKSYMhs-AyYmMg7j-o1N0LXHdWeDsiWw4Ta4GUKF7JSD_vWKuNaogyJYSbGRiNZdVH1bhUnQTTcJno3_-jAwDsWrL5u7ogPTzWwhA03pO"/>
+                            Google
+                        </button>
+<button class="flex items-center justify-center px-4 py-3 border border-border-dark rounded-lg shadow-deep bg-surface-accent text-sm font-medium text-text-light hover:bg-surface-dark focus:outline-none transition-colors" type="button">
+<img alt="Logo GitHub" class="h-5 w-5 mr-3 dark:invert" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBO5b-jCx9APP9OiBpScT-Fg3wbpybdZD4itCrE8L4KNc56-YVkmBk-lZx7AShb8L75Bthd3KPxx2S6dcnsJ-eiCNmQKqlH9z3i6NH5UWy8lSpTpMyRIMo7ku3zDke072U1frOGiIkgZIOEY3HQGlDK_2wxf2j9lcybRlon3R2FwREwKqA9L024utdQxt_a29kHVgJd3N9jXnts3jkbV3dGcc5GFHYXmSBRdWxA-aJibCTU5xfkvneL9uqxr5hCnOMPtP_64hflOMGL"/>
+                            GitHub
+                        </button>
+</div>
+</div>
+</div>
+</div>
+<div class="absolute bottom-6 left-0 right-0 text-center pointer-events-none">
+<p class="text-xs text-text-muted">v2.5.0 Stabil • Dasbor SPK Kajek</p>
+</div>
+</div>
+<button class="fixed top-6 right-6 p-3 rounded-full bg-white/5 dark:bg-black/10 backdrop-blur-md border border-slate-700/50 text-slate-400 hover:text-primary transition-colors z-50 shadow-lg" onclick="document.documentElement.classList.toggle('dark')">
+<span class="material-symbols-outlined block dark:hidden">dark_mode</span>
+<span class="material-symbols-outlined hidden dark:block">light_mode</span>
+</button>
+
+</body></html>
