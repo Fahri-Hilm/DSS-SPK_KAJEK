@@ -1,230 +1,348 @@
-# 🚀 Dashboard TOPSIS - Modern UI/UX
+# 🎨 SPK Kajek - Dashboard Documentation
 
-Dashboard interaktif dengan desain **Glassmorphism** yang modern dan profesional untuk Sistem Pendukung Keputusan pemilihan Server Cloud VPS menggunakan metode TOPSIS.
+## Overview
 
-## ✨ Fitur Utama
+Dashboard SPK Kajek adalah antarmuka pengguna modern untuk Sistem Pendukung Keputusan pemilihan Server Cloud VPS menggunakan metode TOPSIS.
 
-### 🎨 Design Features
-- **Glassmorphism Design** - Efek kaca transparan dengan blur backdrop
-- **Gradient Background** - Background gradient purple yang elegan
-- **Animated Winner Card** - Card pemenang dengan animasi rotating gradient
-- **Interactive Charts** - Visualisasi interaktif menggunakan Plotly
-- **Responsive Layout** - Layout yang optimal di berbagai ukuran layar
-- **Modern Typography** - Font Inter untuk tampilan profesional
+## 🖥️ Technology Stack
 
-### 📊 Dashboard Sections
+| Layer | Technology |
+|-------|------------|
+| **UI Framework** | React 18 + TypeScript |
+| **Build Tool** | Vite 5 |
+| **Styling** | Tailwind CSS 3.3 |
+| **Animations** | Framer Motion |
+| **Charts** | Recharts |
+| **Icons** | Lucide React |
+| **3D Graphics** | Three.js |
+| **HTTP Client** | Axios |
 
-#### 1. **Hero Section**
-- Judul besar dengan gradient text
-- Subtitle informatif
-- Design eye-catching
+## 🎨 Design System
 
-#### 2. **Winner Card (Premium)**
-- Tampilan pemenang dengan design premium
-- Badge emas dengan shadow
-- Stats grid dengan 4 metrik utama
-- Score TOPSIS yang prominent
-- Animasi background rotating
-
-#### 3. **Sidebar - Konfigurasi Bobot**
-- Slider interaktif untuk 4 kriteria
-- Real-time validation total bobot
-- Info dataset
-- Design glassmorphism
-
-#### 4. **Tab 1: Ranking & Visualisasi**
-- **Top 10 Bar Chart** - Horizontal bar dengan gradient colors
-- **Heatmap Top 10** - Perbandingan nilai kriteria
-- **Radar Chart Top 5** - Perbandingan multi-dimensi
-- **Scatter Plot** - Harga vs Score dengan level colors
-- **Pie Chart** - Distribusi bobot kriteria
-
-#### 5. **Tab 2: Perhitungan TOPSIS**
-- Step-by-step calculation dengan styling
-- Matriks Keputusan (X)
-- Matriks Ternormalisasi (R)
-- Matriks Terbobot (Y)
-- Solusi Ideal (A+ & A-)
-- Jarak Euclidean & Score
-- Visualisasi jarak dengan grouped bar chart
-
-#### 6. **Tab 3: Parameter Level**
-- Tabel panduan level 1-5 untuk setiap kriteria
-- Emoji indicators (⭐ untuk benefit, 💰 untuk cost)
-- Distribusi level dalam dataset
-- 4 bar charts untuk setiap kriteria
-
-#### 7. **Tab 4: Edit Data**
-- Mode Edit: Ubah data alternatif existing
-- Mode Tambah: Tambah alternatif baru
-- Select slider dengan emoji dan nama level
-- Preview data real-time
-- Actions: Reset, Hapus, Metrics
-
-#### 8. **Tab 5: Data Lengkap**
-- Tabel lengkap semua alternatif
-- Gradient background pada score
-- Export ke CSV
-- Metrics summary
-
-## 🎨 Color Palette
+### Color Palette
 
 ```css
-Primary: #667eea (Purple Blue)
-Secondary: #764ba2 (Purple)
-Accent 1: #f093fb (Pink)
-Accent 2: #f5576c (Red Pink)
-Success: #10b981 (Green)
-Warning: #fbbf24 (Yellow)
-Danger: #ef4444 (Red)
-Gold: #FFD700 (Gold)
+/* Background Colors */
+--dark-900: #0a0a0f;    /* Darkest background */
+--dark-800: #12121a;    /* Card backgrounds */
+--dark-700: #1a1a24;    /* Elevated surfaces */
+--dark-600: #22222e;    /* Borders & dividers */
+
+/* Text Colors */
+--text-primary: #ffffff;
+--text-secondary: #94a3b8;  /* slate-400 */
+--text-muted: #64748b;      /* slate-500 */
+
+/* Accent Colors */
+--blue-500: #3b82f6;    /* Primary actions */
+--green-500: #22c55e;   /* Success states */
+--yellow-500: #eab308;  /* Warnings */
+--red-500: #ef4444;     /* Errors/Danger */
+--purple-500: #a855f7;  /* Highlights */
+
+/* Glassmorphism */
+--glass-bg: rgba(255, 255, 255, 0.05);
+--glass-border: rgba(255, 255, 255, 0.1);
+--glass-blur: 10px;
 ```
 
-## 🚀 Cara Menjalankan
+### Typography
 
-### 1. Install Dependencies
-```bash
-pip install -r requirements.txt
+```css
+/* Font Family */
+font-family: 'Inter', system-ui, -apple-system, sans-serif;
+
+/* Headings */
+.h1 { font-size: 2.25rem; font-weight: 700; }
+.h2 { font-size: 1.875rem; font-weight: 700; }
+.h3 { font-size: 1.5rem; font-weight: 600; }
+.h4 { font-size: 1.25rem; font-weight: 600; }
+
+/* Body */
+.body-lg { font-size: 1.125rem; }
+.body { font-size: 1rem; }
+.body-sm { font-size: 0.875rem; }
+.caption { font-size: 0.75rem; }
 ```
 
-### 2. Jalankan Dashboard
-```bash
-streamlit run dashboard_new.py
+### Spacing System
+
+```css
+/* Based on Tailwind's default spacing */
+--space-1: 0.25rem;   /* 4px */
+--space-2: 0.5rem;    /* 8px */
+--space-3: 0.75rem;   /* 12px */
+--space-4: 1rem;      /* 16px */
+--space-6: 1.5rem;    /* 24px */
+--space-8: 2rem;      /* 32px */
+--space-12: 3rem;     /* 48px */
 ```
 
-### 3. Akses Dashboard
-Buka browser dan akses: `http://localhost:8501`
+### Border Radius
+
+```css
+--radius-sm: 0.375rem;  /* 6px */
+--radius-md: 0.5rem;    /* 8px */
+--radius-lg: 0.75rem;   /* 12px */
+--radius-xl: 1rem;      /* 16px */
+--radius-2xl: 1.5rem;   /* 24px */
+--radius-full: 9999px;
+```
+
+## 📱 Components
+
+### Layout Components
+
+#### `Layout.tsx`
+Main application layout dengan sidebar navigation dan content area.
+
+```tsx
+<Layout>
+  <Sidebar />
+  <main className="flex-1 overflow-auto">
+    {children}
+  </main>
+</Layout>
+```
+
+#### `Sidebar.tsx`
+Navigation menu dengan:
+- Logo & branding
+- Navigation links dengan icons
+- Active state indicators
+- User profile section
+- Logout button
+
+### Page Components
+
+#### `DashboardView.tsx`
+Home page featuring:
+- Statistics cards (Total Vendors, Top Recommendation, etc.)
+- Recent data table preview
+- Interactive hero section
+- Scrollytelling guide
+
+#### `AnalysisView.tsx`
+TOPSIS analysis page:
+- Weight configuration sliders
+- Real-time validation (total = 100%)
+- Run analysis button
+- Results display (top 10)
+- Bar chart visualization
+- Radar chart comparison
+
+#### `CalculationView.tsx`
+Step-by-step calculation display:
+- Decision Matrix (X)
+- Normalized Matrix (R)
+- Weighted Matrix (Y)
+- Ideal Solutions (A+ & A-)
+- Distance calculations (D+ & D-)
+- Final scores & ranking
+
+#### `DataView.tsx`
+Data management:
+- Full data table
+- Add new vendor form
+- Edit existing vendors
+- Delete confirmation
+- Export to CSV
+
+#### `HistoryView.tsx`
+Calculation history:
+- List of past calculations
+- Date & timestamp
+- Weights used
+- Top results
+- Trend chart
+
+#### `SettingsView.tsx`
+User settings:
+- Profile information
+- Change password
+- Preferences
+
+#### `LoginView.tsx`
+Authentication:
+- Username/password form
+- JWT token handling
+- Error messages
+- Remember me option
+
+### UI Components
+
+#### `ParticleBackground.tsx`
+Animated particle effect background using canvas.
+
+#### `InteractiveHero.tsx`
+Hero section dengan:
+- Animated title
+- Subtitle
+- Call-to-action buttons
+- Scroll indicator
+
+#### `ScrollytellingSection.tsx`
+Scroll-triggered content sections explaining the TOPSIS process.
+
+#### `LiquidLoader.tsx`
+Custom loading animation.
+
+#### `AnimatedText.tsx`
+Text animation component untuk headings.
+
+#### `Chart3D.tsx`
+Three.js based 3D visualization.
+
+#### `MorphingChart.tsx`
+Animated chart transitions.
+
+#### `HistoryTrendChart.tsx`
+Line chart untuk history trends.
+
+## 🔄 State Management
+
+### Context API
+- `ThemeContext.tsx` - Theme preferences
+
+### Component State
+- `useState` for local component state
+- `useEffect` for side effects & data fetching
+
+### API Integration
+- Axios-based API service (`services/api.ts`)
+- JWT token storage in localStorage
+- Automatic token injection in requests
+
+## 📊 Charts
+
+### Recharts Components Used
+- `BarChart` - Ranking visualization
+- `RadarChart` - Multi-criteria comparison
+- `LineChart` - History trends
+- `PieChart` - Weight distribution
+
+### Chart Configuration
+```tsx
+// Example Bar Chart
+<BarChart data={data} layout="vertical">
+  <XAxis type="number" />
+  <YAxis dataKey="name" type="category" />
+  <Bar dataKey="score" fill="#3b82f6" />
+  <Tooltip />
+</BarChart>
+```
+
+## 🎭 Animations
+
+### Framer Motion
+```tsx
+import { motion } from 'framer-motion';
+
+// Fade in animation
+<motion.div
+  initial={{ opacity: 0, y: 20 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ duration: 0.5 }}
+>
+  Content
+</motion.div>
+
+// Hover effects
+<motion.button
+  whileHover={{ scale: 1.05 }}
+  whileTap={{ scale: 0.95 }}
+>
+  Click me
+</motion.button>
+```
+
+### CSS Animations (Tailwind)
+```css
+/* Custom animations in index.css */
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slide-up {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.animate-fade-in { animation: fade-in 0.5s ease-out; }
+.animate-slide-up { animation: slide-up 0.5s ease-out; }
+```
+
+## 🔐 Authentication Flow
+
+```
+1. User enters credentials on LoginView
+2. POST /api/login with username/password
+3. Server validates & returns JWT token
+4. Token stored in localStorage
+5. Axios interceptor adds token to all requests
+6. Protected routes check for valid token
+7. Logout clears token & redirects to login
+```
 
 ## 📱 Responsive Design
 
-Dashboard ini dioptimalkan untuk:
-- 💻 Desktop (1920x1080 dan lebih)
-- 💻 Laptop (1366x768)
-- 📱 Tablet (768x1024)
-- 📱 Mobile (375x667)
-
-## 🎯 UI/UX Best Practices
-
-### ✅ Yang Diterapkan:
-1. **Visual Hierarchy** - Informasi penting lebih prominent
-2. **Consistency** - Design pattern yang konsisten
-3. **Feedback** - Success/error messages dengan balloons
-4. **Accessibility** - Contrast ratio yang baik
-5. **White Space** - Spacing yang optimal
-6. **Color Psychology** - Warna sesuai fungsi (hijau=sukses, merah=bahaya)
-7. **Typography** - Font hierarchy yang jelas
-8. **Interactive Elements** - Hover effects dan transitions
-9. **Data Visualization** - Charts yang mudah dipahami
-10. **Loading States** - Caching untuk performa optimal
-
-## 🏆 Keunggulan Design
-
-### 1. **Glassmorphism Effect**
-- Backdrop blur untuk depth
-- Semi-transparent backgrounds
-- Border dengan opacity
-- Shadow untuk elevation
-
-### 2. **Gradient Magic**
-- Background gradient yang smooth
-- Text gradient untuk emphasis
-- Button gradient untuk CTA
-- Card gradient untuk winner
-
-### 3. **Interactive Charts**
-- Plotly untuk interaktivity
-- Hover tooltips informatif
-- Zoom & pan capabilities
-- Export chart as image
-
-### 4. **Micro-interactions**
-- Button hover effects
-- Card hover transforms
-- Smooth transitions
-- Balloons animation on success
-
-## 📊 Chart Types
-
-1. **Horizontal Bar Chart** - Top 10 ranking
-2. **Heatmap** - Kriteria comparison
-3. **Radar Chart** - Multi-dimensional view
-4. **Scatter Plot** - Price vs Score correlation
-5. **Pie Chart** - Weight distribution
-6. **Grouped Bar Chart** - Distance visualization
-7. **Simple Bar Charts** - Level distribution
-
-## 🎨 CSS Customization
-
-File menggunakan custom CSS dengan:
-- Google Fonts (Inter)
-- CSS Variables untuk colors
-- Flexbox & Grid layouts
-- CSS Animations
-- Media queries (responsive)
-- Pseudo-elements untuk effects
-
-## 💡 Tips Penggunaan
-
-1. **Adjust Weights** - Gunakan sidebar untuk mengubah bobot kriteria
-2. **Explore Charts** - Hover pada charts untuk detail
-3. **Edit Data** - Tambah/edit alternatif di Tab 4
-4. **Export Results** - Download CSV di Tab 5
-5. **Reset Data** - Kembali ke data awal kapan saja
-
-## 🔧 Customization
-
-### Ubah Color Scheme:
-Edit bagian CSS di `dashboard_new.py`:
-```python
-background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+### Breakpoints (Tailwind)
+```css
+sm: 640px   /* Small devices */
+md: 768px   /* Tablets */
+lg: 1024px  /* Laptops */
+xl: 1280px  /* Desktops */
+2xl: 1536px /* Large screens */
 ```
 
-### Ubah Font:
-```python
-@import url('https://fonts.googleapis.com/css2?family=YourFont');
-font-family: 'YourFont', sans-serif;
+### Responsive Patterns
+```tsx
+// Grid responsive
+<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+
+// Sidebar hide on mobile
+<aside className="hidden lg:block w-64">
+
+// Stack on mobile, row on desktop
+<div className="flex flex-col md:flex-row">
 ```
 
-### Ubah Layout:
-Sesuaikan `st.columns()` ratio dan grid layout
+## 🚀 Performance
 
-## 📈 Performance
+### Optimizations
+- Vite for fast HMR & builds
+- Code splitting by route
+- Lazy loading components
+- Memoization with `useMemo` & `useCallback`
+- Optimized re-renders
 
-- **Caching** - `@st.cache_data` untuk load data
-- **Lazy Loading** - Charts dimuat per tab
-- **Optimized Images** - Vector graphics (SVG)
-- **Minimal Re-renders** - Efficient state management
+### Bundle Size
+- Tree-shaking enabled
+- Production builds minified
+- CSS purging via Tailwind
 
-## 🎓 Tech Stack
+## 📁 File Organization
 
-- **Streamlit** - Web framework
-- **Plotly** - Interactive charts
-- **Pandas** - Data manipulation
-- **NumPy** - Numerical computation
-- **CSS3** - Custom styling
-- **HTML5** - Custom components
-
-## 📝 Notes
-
-- Dashboard ini menggunakan **session state** untuk menyimpan data
-- Semua perubahan data bersifat **temporary** (tidak tersimpan ke file)
-- Untuk menyimpan permanen, gunakan tombol **Download CSV**
-- Refresh browser akan **reset** semua perubahan
-
-## 🏅 Award-Winning Features
-
-Design ini menerapkan prinsip UI/UX terbaik:
-- ✅ Nielsen's 10 Usability Heuristics
-- ✅ Material Design Guidelines
-- ✅ Apple Human Interface Guidelines
-- ✅ Web Content Accessibility Guidelines (WCAG)
-- ✅ Gestalt Principles
-- ✅ Fitts's Law
-- ✅ Hick's Law
-- ✅ Miller's Law
+```
+src/
+├── components/          # React components
+│   ├── Layout.tsx       # Main layout
+│   ├── Sidebar.tsx      # Navigation
+│   ├── DashboardView.tsx
+│   ├── AnalysisView.tsx
+│   └── ...
+├── services/
+│   └── api.ts           # API client
+├── context/
+│   └── ThemeContext.tsx # Theme state
+├── App.tsx              # Root component
+├── main.tsx             # Entry point
+└── index.css            # Global styles
+```
 
 ---
 
-**Dibuat dengan ❤️ oleh Tim UI/UX PT Kajek Indonesia**
-
-*"Design is not just what it looks like and feels like. Design is how it works." - Steve Jobs*
+**Version**: 2.0
+**Framework**: React 18 + TypeScript
+**Last Updated**: January 2026
