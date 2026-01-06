@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Shield, Key, Save, Settings as SettingsIcon, CheckCircle, AlertCircle, X, User, Mail, Bell, Globe, Moon } from 'lucide-react';
 import { api } from '../services/api';
+import { toast } from 'sonner';
+import ReactorTheme from './ReactorTheme';
+import { useTheme } from '../context/ThemeContext';
 
 const SettingsView: React.FC = () => {
-    // Toast State
-    const [notification, setNotification] = useState<{ type: 'success' | 'error', message: string } | null>(null);
-
     // Password State
     const [oldPassword, setOldPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
@@ -18,6 +18,7 @@ const SettingsView: React.FC = () => {
     const [loading, setLoading] = useState(false);
 
     // Preferences State
+    const { theme, setTheme } = useTheme();
     const [language, setLanguage] = useState('id');
     const [notifications, setNotifications] = useState(true);
 
@@ -30,39 +31,34 @@ const SettingsView: React.FC = () => {
                 setEmail(profile.email);
             } catch (error) {
                 console.error('Failed to load profile:', error);
-                showNotification('error', 'Gagal memuat profil');
+                toast.error('Gagal memuat profil');
             }
         };
         loadProfile();
     }, []);
 
-    const showNotification = (type: 'success' | 'error', message: string) => {
-        setNotification({ type, message });
-        setTimeout(() => setNotification(null), 3000);
-    };
-
     const handlePasswordChange = async (e: React.FormEvent) => {
         e.preventDefault();
 
         if (newPassword.length < 6) {
-            showNotification('error', 'Kata sandi baru minimal 6 karakter.');
+            toast.error('Kata sandi baru minimal 6 karakter.');
             return;
         }
         if (newPassword !== confirmPassword) {
-            showNotification('error', 'Konfirmasi kata sandi tidak cocok.');
+            toast.error('Konfirmasi kata sandi tidak cocok.');
             return;
         }
 
         setLoading(true);
         try {
             await api.changePassword(oldPassword, newPassword);
-            showNotification('success', 'Kata sandi berhasil diperbarui!');
+            toast.success('Kata sandi berhasil diperbarui!');
             setOldPassword('');
             setNewPassword('');
             setConfirmPassword('');
         } catch (error: any) {
             const errorMessage = error?.response?.data?.detail || 'Gagal mengubah kata sandi';
-            showNotification('error', errorMessage);
+            toast.error(errorMessage);
         } finally {
             setLoading(false);
         }
@@ -73,10 +69,10 @@ const SettingsView: React.FC = () => {
         setLoading(true);
         try {
             await api.updateProfile(email, displayName);
-            showNotification('success', 'Profil berhasil diperbarui!');
+            toast.success('Profil berhasil diperbarui!');
         } catch (error: any) {
             const errorMessage = error?.response?.data?.detail || 'Gagal memperbarui profil';
-            showNotification('error', errorMessage);
+            toast.error(errorMessage);
         } finally {
             setLoading(false);
         }
@@ -94,27 +90,6 @@ const SettingsView: React.FC = () => {
                     <p className="text-slate-400">Kelola profil, preferensi, dan keamanan akun Anda.</p>
                 </div>
             </div>
-
-            {/* Notification Toast */}
-            <AnimatePresence>
-                {notification && (
-                    <motion.div
-                        initial={{ opacity: 0, y: -20, x: '50%' }}
-                        animate={{ opacity: 1, y: 0, x: '50%' }}
-                        exit={{ opacity: 0, y: -20, x: '50%' }}
-                        className={`fixed top-6 right-1/2 transform translate-x-1/2 z-50 flex items-center gap-3 px-6 py-4 rounded-xl shadow-2xl backdrop-blur-md border ${notification.type === 'success'
-                            ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-200'
-                            : 'bg-red-500/10 border-red-500/20 text-red-200'
-                            }`}
-                    >
-                        {notification.type === 'success' ? <CheckCircle size={20} /> : <AlertCircle size={20} />}
-                        <span className="font-medium">{notification.message}</span>
-                        <button onClick={() => setNotification(null)} className="ml-2 opacity-70 hover:opacity-100">
-                            <X size={16} />
-                        </button>
-                    </motion.div>
-                )}
-            </AnimatePresence>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
 
@@ -196,6 +171,12 @@ const SettingsView: React.FC = () => {
                                     <option value="en">English</option>
                                 </select>
                             </div>
+
+                            {/* Reactor Theme Selector */}
+                            <ReactorTheme
+                                currentTheme={theme}
+                                onThemeChange={(t) => setTheme(t as any)}
+                            />
 
                             <div className="flex items-center justify-between p-4 bg-black/20 rounded-xl border border-white/5">
                                 <div className="flex items-center gap-3">

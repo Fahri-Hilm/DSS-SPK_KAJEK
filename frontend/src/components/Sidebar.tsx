@@ -4,6 +4,7 @@ import { Home, BarChart2, Calculator, Database, History, BookOpen, ChevronLeft, 
 import { clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import { motion, AnimatePresence } from 'framer-motion';
+import MagneticButton from './MagneticButton';
 
 const cn = (...inputs: (string | undefined | null | false)[]) => twMerge(clsx(inputs));
 
@@ -139,14 +140,14 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab, collapsed = 
                         const isActive = activeTab === item.id;
 
                         return (
-                            <div key={item.id} className="relative group">
+                            <MagneticButton key={item.id} className="w-full relative group" strength={20}>
                                 <button
                                     onClick={() => {
                                         setActiveTab(item.id);
                                         if (window.innerWidth < 768) setIsOpen(false);
                                     }}
                                     className={cn(
-                                        "w-full flex items-center p-3 rounded-xl transition-all duration-200 relative overflow-hidden flex-shrink-0",
+                                        "w-full flex items-center p-3 rounded-xl transition-all duration-200 relative overflow-hidden flex-shrink-0 cursor-pointer",
                                         collapsed ? "justify-center" : "justify-start gap-3",
                                         isActive
                                             ? "text-white shadow-lg shadow-blue-500/20"
@@ -156,43 +157,30 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab, collapsed = 
                                 >
                                     {isActive && (
                                         <motion.div
-                                            layoutId="activeTabBg"
-                                            className="absolute inset-0 bg-gradient-to-r from-blue-600 to-indigo-600 opacity-100"
+                                            layoutId="activeTab"
+                                            className="absolute left-0 w-1 h-6 bg-blue-500 rounded-r-full"
                                             initial={{ opacity: 0 }}
                                             animate={{ opacity: 1 }}
-                                            transition={{ duration: 0.15, ease: "easeOut" }}
+                                            exit={{ opacity: 0 }}
                                         />
                                     )}
-                                    {!isActive && (
-                                        <div className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-150" />
+
+                                    <Icon size={20} className={clsx(
+                                        "transition-transform duration-300",
+                                        isActive ? "text-blue-400 scale-110" : "group-hover:scale-110"
+                                    )} />
+
+                                    {!collapsed && (
+                                        <span className="font-medium tracking-wide">
+                                            {item.label}
+                                        </span>
                                     )}
 
-                                    <div className={cn("flex items-center relative z-10 flex-shrink-0")}>
-                                        <Icon size={20} className={cn(
-                                            "transition-transform duration-200 flex-shrink-0",
-                                            isActive ? "scale-110 text-white" : "group-hover:scale-110 group-hover:text-blue-300"
-                                        )} />
-                                    </div>
-
-                                    <AnimatePresence>
-                                        {!collapsed && (
-                                            <motion.span
-                                                variants={textVariants}
-                                                initial="collapsed"
-                                                animate="expanded"
-                                                exit="collapsed"
-                                                className={cn("font-medium text-sm whitespace-nowrap overflow-hidden relative z-10", isActive ? "text-white" : "")}
-                                            >
-                                                {item.label}
-                                            </motion.span>
-                                        )}
-                                    </AnimatePresence>
-
-                                    {!collapsed && isActive && (
+                                    {isActive && !collapsed && (
                                         <motion.div
-                                            initial={{ scale: 0 }}
-                                            animate={{ scale: 1 }}
-                                            className="w-1.5 h-1.5 rounded-full bg-white relative z-10 ml-auto"
+                                            className="absolute inset-0 bg-blue-400/5"
+                                            initial={{ opacity: 0 }}
+                                            animate={{ opacity: 1 }}
                                         />
                                     )}
                                 </button>
@@ -204,7 +192,7 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab, collapsed = 
                                         <div className="absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-1 w-2 h-2 bg-slate-900 border-l border-b border-white/10 rotate-45"></div>
                                     </div>
                                 )}
-                            </div>
+                            </MagneticButton>
                         );
                     })}
                 </nav>

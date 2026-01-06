@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Toaster } from 'sonner';
 import { api } from './services/api';
 import Layout from './components/Layout';
 import DashboardView from './components/DashboardView';
@@ -53,27 +54,36 @@ function App() {
         setCurrentUser(null);
         setIsAuthenticated(false);
         setActiveTab('dashboard');
+        sessionStorage.removeItem('hasBooted'); // Reset boot sequence for next login
     };
 
     if (!isAuthenticated) {
-        return <LoginView onLogin={handleLogin} />;
+        return (
+            <>
+                <Toaster position="top-right" theme="dark" richColors />
+                <LoginView onLogin={handleLogin} />
+            </>
+        );
     }
 
     return (
-        <Layout activeTab={activeTab} setActiveTab={setActiveTab} onLogout={handleLogout} currentUser={currentUser}>
-            <AnimatePresence mode="wait">
-                <motion.div
-                    key={activeTab}
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -20 }}
-                    transition={{ duration: 0.3, ease: 'easeOut' }}
-                    className="h-full"
-                >
-                    {renderContent()}
-                </motion.div>
-            </AnimatePresence>
-        </Layout>
+        <>
+            <Toaster position="top-right" theme="dark" richColors />
+            <Layout activeTab={activeTab} setActiveTab={setActiveTab} onLogout={handleLogout} currentUser={currentUser}>
+                <AnimatePresence mode="wait">
+                    <motion.div
+                        key={activeTab}
+                        initial={{ opacity: 0, x: 20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        exit={{ opacity: 0, x: -20 }}
+                        transition={{ duration: 0.3, ease: 'easeOut' }}
+                        className="h-full"
+                    >
+                        {renderContent()}
+                    </motion.div>
+                </AnimatePresence>
+            </Layout>
+        </>
     );
 }
 

@@ -57,12 +57,39 @@
   /* Slate 200 */
   --border-hover: #cbd5e1;
   /* Slate 300 */
+  /* Slate 300 */
+}
+
+/* Deep Ocean Theme (Blue Variant) */
+.blue-theme {
+  --bg-primary: #020617;
+  /* Slate 950 */
+  --bg-secondary: #0f172a;
+  /* Slate 900 */
+  --bg-tertiary: #1e293b;
+  /* Slate 800 */
+
+  --accent-primary: #06b6d4;
+  /* Cyan 500 */
+  --accent-glow: rgba(6, 182, 212, 0.5);
+
+  --text-primary: #ecfeff;
+  /* Cyan 50 */
+  --text-secondary: #a5f3fc;
+  /* Cyan 200 */
+  --text-muted: #22d3ee;
+  /* Cyan 400 */
+
+  --glass-border: rgba(6, 182, 212, 0.2);
+  --glass-bg: rgba(15, 23, 42, 0.7);
+  --glass-shine: rgba(6, 182, 212, 0.1);
 }
 
 
 
 :root {
-  font-family: 'Inter', sans-serif;
+  /* Fira Sans for body text and labels - optimized for dashboards */
+  font-family: 'Fira Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
 body {
@@ -72,6 +99,29 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Monospace font for data/numbers - use Fira Code */
+.font-mono,
+table td,
+table th,
+.text-mono {
+  font-family: 'Fira Code', 'Courier New', monospace;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ============================================
+   ACCESSIBILITY: Reduced Motion Support
+   ============================================ */
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 
 /* Micro-interactions and Animations */
@@ -183,9 +233,10 @@ body {
 
 
 
-/* Enhanced hover effects */
+/* Enhanced hover effects - optimized */
 .hover-lift {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
 }
 
 .hover-lift:hover {
@@ -217,11 +268,12 @@ body {
   transform: rotate(5deg);
 }
 
-/* Button micro-interactions */
+/* Button micro-interactions - optimized with proper easing */
 .btn-interactive {
   position: relative;
   overflow: hidden;
-  transition: all 0.3s ease;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
 }
 
 .btn-interactive::before {
@@ -232,7 +284,7 @@ body {
   width: 100%;
   height: 100%;
   background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-  transition: left 0.5s ease;
+  transition: left 0.5s ease-out;
 }
 
 .btn-interactive:hover::before {
@@ -241,6 +293,7 @@ body {
 
 .btn-interactive:active {
   transform: scale(0.98);
+  transition: transform 0.1s ease-in;
 }
 
 /* Card animations */
@@ -771,16 +824,43 @@ input[type="range"]::-moz-range-thumb:hover {
 /* 
    GLASSMORPHISM UTILITIES 
    -----------------------
-   Essential for that "Premium" feel.
 */
 
 .glass-panel {
-  background: var(--glass-bg);
+  background: rgba(15, 23, 42, 0.6);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid var(--glass-border);
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.36);
+  position: relative;
+  overflow: hidden;
 }
+
+
+
+.light .glass-panel {
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+}
+
+
+
+/* Gradient Borders */
+.gradient-border-mask {
+  position: relative;
+  background: padding-box linear-gradient(var(--bg-secondary), var(--bg-secondary)),
+    border-box linear-gradient(145deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.05) 50%, rgba(255, 255, 255, 0.05));
+  border: 1px solid transparent;
+}
+
+.light .gradient-border-mask {
+  background: padding-box linear-gradient(#ffffff, #ffffff),
+    border-box linear-gradient(145deg, rgba(37, 99, 235, 0.2), rgba(0, 0, 0, 0.05) 50%, rgba(0, 0, 0, 0.05));
+}
+
+
+
 
 .glass-card {
   background: linear-gradient(135deg, var(--glass-bg) 0%, rgba(30, 41, 59, 0.4) 100%);
@@ -792,20 +872,21 @@ input[type="range"]::-moz-range-thumb:hover {
 
 /* Glassmorphism yang lebih terlihat di light mode */
 .light .glass-panel {
-  background: rgba(255, 255, 255, 0.85);
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.08),
-    0 2px 4px -1px rgba(0, 0, 0, 0.04),
-    inset 0 1px 0 0 rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.12),
+    0 2px 4px -1px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 0 rgba(255, 255, 255, 1);
 }
 
 .light .glass-card {
   background: linear-gradient(135deg,
-      rgba(255, 255, 255, 0.9) 0%,
-      rgba(248, 250, 252, 0.8) 100%);
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1),
-    inset 0 1px 0 0 rgba(255, 255, 255, 0.95);
+      rgba(255, 255, 255, 0.95) 0%,
+      rgba(248, 250, 252, 0.90) 100%);
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.12),
+    0 2px 8px 0 rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 0 rgba(255, 255, 255, 1);
 }
 
 /* Input fields untuk light mode */
@@ -852,13 +933,14 @@ input[type="range"]::-moz-range-thumb:hover {
 
 .text-gradient {
   background: linear-gradient(to right, #60a5fa, #a78bfa, #f472b6);
+  background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  background-clip: text;
 }
 
 .light .text-gradient {
   background: linear-gradient(to right, #2563eb, #7c3aed, #db2777);
+  background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }

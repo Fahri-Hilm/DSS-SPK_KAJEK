@@ -1,8 +1,8 @@
 {
-  "admin": {
-    "username": "admin",
-    "password": "083ba5406d9aa4babbbea9ed26d3771a$8ae6d3f38b5c94a907d5252d1c66cadf639653c3bda74bf62e799fac6d3dff86",
-    "email": "admin@spk-kajek.com",
-    "display_name": "Administrator"
-  }
+    "admin": {
+        "username": "admin",
+        "password": "083ba5406d9aa4babbbea9ed26d3771a$8ae6d3f38b5c94a907d5252d1c66cadf639653c3bda74bf62e799fac6d3dff86",
+        "email": "admin@spk-kajek.com",
+        "display_name": "Administrator"
+    }
 }

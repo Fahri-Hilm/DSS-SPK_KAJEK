@@ -1,0 +1,196 @@
+/* Light Mode Chart Improvements - Add to index.css */
+
+/* Light mode chart bar gradients - Better visibility */
+.light .recharts-bar-rectangle {
+    filter: brightness(0.95) saturate(1.1);
+}
+
+/* Light mode chart tooltips - Better contrast */
+.light .recharts-tooltip-wrapper {
+    filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.15));
+}
+
+/* Light mode chart text - Better readability */
+.light .recharts-text {
+    fill: #334155 !important;
+    font-weight: 500;
+}
+
+/* Light mode chart grid - More visible */
+.light .recharts-cartesian-grid-horizontal line,
+.light .recharts-cartesian-grid-vertical line {
+    stroke: rgba(0, 0, 0, 0.08) !important;
+    stroke-width: 1;
+}
+
+/* Light mode radar chart grid */
+.light .recharts-polar-grid-concentric-circle {
+    stroke: rgba(0, 0, 0, 0.1) !important;
+    stroke-width: 1.5;
+}
+
+/* Light mode button improvements */
+.light button:not(.bg-white) {
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1),
+        0 1px 2px 0 rgba(0, 0, 0, 0.06);
+}
+
+.light button:not(.bg-white):hover {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+        0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+/* Light mode CTA button - White buttons get better shadows */
+.light button.bg-white,
+.light .bg-white {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.15),
+        0 2px 4px -1px rgba(0, 0, 0, 0.1) !important;
+}
+
+.light button.bg-white:hover {
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.15),
+        0 4px 6px -2px rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Light mode table improvements */
+.light table thead tr {
+    border-bottom-color: rgba(0, 0, 0, 0.12);
+}
+
+.light table tbody tr {
+    border-bottom-color: rgba(0, 0, 0, 0.05);
+}
+
+/* Light mode hover states for cards */
+.light .hover-border-blue-500-30:hover {
+    border-color: rgba(37, 99, 235, 0.5) !important;
+    box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.1);
+}
+
+.light .hover-border-purple-500-30:hover {
+    border-color: rgba(124, 58, 237, 0.5) !important;
+    box-shadow: 0 0 0 1px rgba(124, 58, 237, 0.1);
+}
+
+/* Light mode specific utilities */
+.light .light\:bg-white {
+    background-color: #ffffff !important;
+}
+
+.light .light\:bg-slate-50 {
+    background-color: #f8fafc !important;
+}
+
+.light .light\:text-slate-600 {
+    color: #475569 !important;
+}
+
+.light .light\:border-slate-200 {
+    border-color: #e2e8f0 !important;
+}
+
+/* ============================================
+   FORM VALIDATION STYLES
+   ============================================ */
+
+/* Input focus states - enhanced */
+.light input:focus,
+.light textarea:focus,
+.light select:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1),
+        0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    transition: all 0.2s ease-out;
+}
+
+/* Error state */
+.input-error,
+.light .input-error {
+    border-color: #ef4444 !important;
+    background-color: rgba(239, 68, 68, 0.05);
+}
+
+.light .input-error:focus {
+    border-color: #dc2626 !important;
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1),
+        0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+/* Success state */
+.input-success,
+.light .input-success {
+    border-color: #10b981 !important;
+    background-color: rgba(16, 185, 129, 0.05);
+}
+
+.light .input-success:focus {
+    border-color: #059669 !important;
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1),
+        0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+/* Loading state for inputs */
+.input-loading {
+    position: relative;
+    pointer-events: none;
+    opacity: 0.6;
+}
+
+.input-loading::after {
+    content: '';
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(59, 130, 246, 0.3);
+    border-top-color: #3b82f6;
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: translateY(-50%) rotate(360deg);
+    }
+}
+
+/* Validation messages */
+.validation-message {
+    font-size: 0.75rem;
+    margin-top: 0.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    animation: slideInDown 0.2s ease-out;
+}
+
+@keyframes slideInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-4px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.validation-message.error {
+    color: #ef4444;
+}
+
+.light .validation-message.error {
+    color: #dc2626;
+}
+
+.validation-message.success {
+    color: #10b981;
+}
+
+.light .validation-message.success {
+    color: #059669;
+}

@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { api, DataItem, VendorRequest } from '../services/api';
-import { Plus, Trash2, Database, RefreshCw, Edit2, Check, X } from 'lucide-react';
+import { Plus, Trash2, Database, RefreshCw, Edit2, Check, X, ScanLine, Wifi } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { clsx } from 'clsx';
+import { Skeleton } from './ui/Skeleton';
+import { toast } from 'sonner';
 
 const DataView: React.FC = () => {
     const [data, setData] = useState<DataItem[]>([]);
     const [loading, setLoading] = useState(true);
     const [showForm, setShowForm] = useState(false);
     const [submitting, setSubmitting] = useState(false);
+    const [scanning, setScanning] = useState(false);
     const [editingId, setEditingId] = useState<number | null>(null);
     const [editData, setEditData] = useState<VendorRequest>({
         vendor: '',
@@ -33,6 +37,7 @@ const DataView: React.FC = () => {
             setData(result);
         } catch (error) {
             console.error("Failed to fetch data", error);
+            toast.error("Gagal memuat data vendor");
         } finally {
             setLoading(false);
         }
@@ -44,28 +49,36 @@ const DataView: React.FC = () => {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        setSubmitting(true);
-        try {
-            await api.addVendor(formData);
-            setFormData({ vendor: '', nama_paket: '', cpu_level: 1, ram_level: 1, diskio_level: 1, price_level: 1 });
-            setShowForm(false);
-            fetchData();
-        } catch (error) {
-            console.error("Failed to add vendor", error);
-            alert("Gagal menambahkan vendor");
-        } finally {
-            setSubmitting(false);
-        }
+        setScanning(true);
+        setTimeout(async () => {
+            setSubmitting(true);
+            try {
+                await api.addVendor(formData);
+                setFormData({ vendor: '', nama_paket: '', cpu_level: 1, ram_level: 1, diskio_level: 1, price_level: 1 });
+                setShowForm(false);
+                fetchData();
+                toast.success("Vendor berhasil ditambahkan");
+            } catch (error) {
+                console.error("Failed to add vendor", error);
+                toast.error("Gagal menambahkan vendor");
+            } finally {
+                setSubmitting(false);
+                setScanning(false);
+            }
+        }, 1500); // Wait for scan animation
     };
 
     const handleDelete = async (no: number) => {
+        // Using a custom toast with action instead of window.confirm could be a future upgrade,
+        // but for now we'll stick to confirm for safety, or upgrade to a modal later.
         if (!confirm("Yakin ingin menghapus vendor ini?")) return;
         try {
             await api.deleteVendor(no);
             fetchData();
+            toast.success("Vendor berhasil dihapus");
         } catch (error) {
             console.error("Failed to delete vendor", error);
-            alert("Gagal menghapus vendor");
+            toast.error("Gagal menghapus vendor");
         }
     };
 
@@ -91,9 +104,10 @@ const DataView: React.FC = () => {
             await api.updateVendor(editingId, editData);
             setEditingId(null);
             fetchData();
+            toast.success("Vendor berhasil diperbarui");
         } catch (error) {
             console.error("Failed to update vendor", error);
-            alert("Gagal mengupdate vendor");
+            toast.error("Gagal mengupdate vendor");
         }
     };
 
@@ -122,42 +136,96 @@ const DataView: React.FC = () => {
                 </div>
             </div>
 
-            {/* Add Form */}
-            {showForm && (
-                <div className="bg-dark-800 rounded-2xl border border-dark-700 p-6 animate-in slide-in-from-top duration-300">
-                    <h3 className="text-lg font-bold text-white mb-4">Tambah Vendor Baru</h3>
-                    <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                        <div>
-                            <label className="block text-sm text-slate-400 mb-2">Nama Vendor</label>
-                            <input type="text" required value={formData.vendor} onChange={(e) => setFormData({ ...formData, vendor: e.target.value })}
-                                className="w-full px-4 py-2 bg-dark-900 border border-dark-600 rounded-xl text-white focus:border-blue-500 focus:outline-none" placeholder="Contoh: AWS" />
-                        </div>
-                        <div>
-                            <label className="block text-sm text-slate-400 mb-2">Nama Paket</label>
-                            <input type="text" required value={formData.nama_paket} onChange={(e) => setFormData({ ...formData, nama_paket: e.target.value })}
-                                className="w-full px-4 py-2 bg-dark-900 border border-dark-600 rounded-xl text-white focus:border-blue-500 focus:outline-none" placeholder="Contoh: EC2 t3.medium" />
-                        </div>
-                        {['cpu_level', 'ram_level', 'diskio_level', 'price_level'].map((key) => (
-                            <div key={key}>
-                                <label className="block text-sm text-slate-400 mb-2">{key.replace('_level', '').toUpperCase()} Level</label>
-                                <select value={(formData as any)[key]} onChange={(e) => setFormData({ ...formData, [key]: parseInt(e.target.value) })}
-                                    className="w-full px-4 py-2 bg-dark-900 border border-dark-600 rounded-xl text-white focus:border-blue-500 focus:outline-none">
-                                    {levelOptions.map(l => <option key={l} value={l}>{l}</option>)}
-                                </select>
+            {/* Add Form with Holographic Effect */}
+            <AnimatePresence>
+                {showForm && (
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.95, y: -20 }}
+                        animate={{ opacity: 1, scale: 1, y: 0 }}
+                        exit={{ opacity: 0, scale: 0.9 }}
+                        className="relative bg-dark-900/80 backdrop-blur-xl rounded-2xl border border-blue-500/30 p-8 shadow-[0_0_50px_rgba(59,130,246,0.1)] overflow-hidden"
+                    >
+                        {/* Holographic Grid Background */}
+                        <div className="absolute inset-0 bg-grid-white/[0.05] pointer-events-none" />
+
+                        {/* Scanning Beam */}
+                        <AnimatePresence>
+                            {scanning && (
+                                <motion.div
+                                    initial={{ top: -10, opacity: 0 }}
+                                    animate={{ top: "100%", opacity: [0, 1, 1, 0] }}
+                                    transition={{ duration: 1.5, ease: "easeInOut" }}
+                                    className="absolute left-0 right-0 h-20 bg-gradient-to-b from-blue-500/0 via-blue-500/20 to-blue-500/0 z-20 pointer-events-none border-t border-blue-400/50 shadow-[0_0_20px_rgba(59,130,246,0.5)]"
+                                />
+                            )}
+                        </AnimatePresence>
+
+                        <div className="flex items-center justify-between mb-6 relative z-10">
+                            <h3 className="text-lg font-bold text-blue-100 flex items-center gap-2">
+                                <ScanLine className={scanning ? "animate-pulse text-blue-400" : "text-slate-400"} />
+                                INPUT DATA VENDOR BARU
+                            </h3>
+                            <div className="flex items-center gap-2">
+                                <span className="text-[10px] uppercase font-mono text-blue-500 animate-pulse">
+                                    {scanning ? "SCANNING..." : "SYSTEM READY"}
+                                </span>
+                                <Wifi size={14} className="text-blue-500" />
                             </div>
-                        ))}
-                        <div className="md:col-span-2 lg:col-span-3 flex justify-end gap-3 mt-4">
-                            <button type="button" onClick={() => setShowForm(false)} className="px-6 py-2 bg-dark-700 hover:bg-dark-600 text-slate-300 rounded-xl transition-all">Batal</button>
-                            <button type="submit" disabled={submitting} className="px-6 py-2 bg-green-600 hover:bg-green-500 text-white rounded-xl transition-all disabled:opacity-50">{submitting ? "Menyimpan..." : "Simpan"}</button>
                         </div>
-                    </form>
-                </div>
-            )}
+
+                        <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 relative z-10">
+                            <div className="group">
+                                <label className="block text-xs font-mono text-blue-400/70 mb-2 uppercase tracking-wider">Nama Vendor</label>
+                                <input type="text" required value={formData.vendor} onChange={(e) => setFormData({ ...formData, vendor: e.target.value })}
+                                    className="w-full px-4 py-3 bg-blue-950/20 border border-blue-500/20 rounded-none text-blue-100 placeholder-blue-500/30 focus:border-blue-400 focus:bg-blue-900/30 focus:outline-none transition-all font-mono" placeholder="ENTER_VENDOR_NAME" />
+                            </div>
+                            <div className="group">
+                                <label className="block text-xs font-mono text-blue-400/70 mb-2 uppercase tracking-wider">Nama Paket</label>
+                                <input type="text" required value={formData.nama_paket} onChange={(e) => setFormData({ ...formData, nama_paket: e.target.value })}
+                                    className="w-full px-4 py-3 bg-blue-950/20 border border-blue-500/20 rounded-none text-blue-100 placeholder-blue-500/30 focus:border-blue-400 focus:bg-blue-900/30 focus:outline-none transition-all font-mono" placeholder="ENTER_PLAN_NAME" />
+                            </div>
+                            {['cpu_level', 'ram_level', 'diskio_level', 'price_level'].map((key) => (
+                                <div key={key}>
+                                    <label className="block text-xs font-mono text-blue-400/70 mb-2 uppercase tracking-wider">{key.replace('_level', '').toUpperCase()} LEVEL</label>
+                                    <select value={(formData as any)[key]} onChange={(e) => setFormData({ ...formData, [key]: parseInt(e.target.value) })}
+                                        className="w-full px-4 py-3 bg-blue-950/20 border border-blue-500/20 rounded-none text-blue-100 focus:border-blue-400 focus:bg-blue-900/30 focus:outline-none transition-all font-mono appearance-none">
+                                        {levelOptions.map(l => <option key={l} value={l} className="bg-dark-900">LEVEL {l}</option>)}
+                                    </select>
+                                </div>
+                            ))}
+                            <div className="md:col-span-2 lg:col-span-3 flex justify-end gap-4 mt-6 border-t border-white/5 pt-6">
+                                <button type="button" onClick={() => setShowForm(false)} className="px-6 py-2 bg-transparent hover:bg-white/5 text-slate-400 border border-transparent hover:border-slate-700 rounded transition-all font-mono text-sm uppercase">Batal</button>
+                                <button type="submit" disabled={submitting || scanning} className="relative px-8 py-2 bg-blue-600/20 hover:bg-blue-500/30 text-blue-300 border border-blue-500/50 rounded hover:shadow-[0_0_20px_rgba(59,130,246,0.3)] transition-all disabled:opacity-50 font-mono text-sm uppercase flex items-center gap-2 overflow-hidden group">
+                                    <span className="relative z-10">{scanning ? "TRANSMITTING..." : "INITIATE UPLOAD"}</span>
+                                    <div className="absolute inset-0 bg-blue-500/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+                                </button>
+                            </div>
+                        </form>
+
+                        {/* Decorative Corners */}
+                        <div className="absolute top-0 left-0 w-4 h-4 border-l-2 border-t-2 border-blue-500"></div>
+                        <div className="absolute top-0 right-0 w-4 h-4 border-r-2 border-t-2 border-blue-500"></div>
+                        <div className="absolute bottom-0 left-0 w-4 h-4 border-l-2 border-b-2 border-blue-500"></div>
+                        <div className="absolute bottom-0 right-0 w-4 h-4 border-r-2 border-b-2 border-blue-500"></div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
 
             {/* Data Table with Inline Edit */}
             <div className="bg-dark-800 rounded-2xl border border-dark-700 overflow-hidden">
                 {loading ? (
-                    <div className="p-8 text-center text-slate-400">Memuat data...</div>
+                    <div className="p-6 space-y-4">
+                        {[...Array(5)].map((_, i) => (
+                            <div key={i} className="flex items-center space-x-4">
+                                <Skeleton className="h-12 w-12 rounded-full" />
+                                <div className="space-y-2 flex-1">
+                                    <Skeleton className="h-4 w-[250px]" />
+                                    <Skeleton className="h-4 w-[200px]" />
+                                </div>
+                                <Skeleton className="h-12 w-12 rounded-full" />
+                            </div>
+                        ))}
+                    </div>
                 ) : (
                     <div className="overflow-x-auto">
                         <table className="w-full text-left">

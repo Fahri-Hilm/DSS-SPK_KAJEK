@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Calculator, Play, ChevronDown, ChevronUp, Info } from 'lucide-react';
 import { clsx } from 'clsx';
 import axios from 'axios';
+import { Skeleton } from './ui/Skeleton';
+import { toast } from 'sonner';
 
 interface CalculationResult {
     weights: { cpu: number; ram: number; disk: number; price: number };
@@ -31,9 +33,10 @@ const CalculationView: React.FC = () => {
         try {
             const response = await axios.post('http://localhost:8000/api/calculate-detail', weights);
             setResult(response.data);
+            toast.success("Perhitungan selesai!");
         } catch (error) {
             console.error(error);
-            alert('Gagal menghitung. Periksa koneksi ke backend.');
+            toast.error('Gagal menghitung. Periksa koneksi ke backend.');
         } finally {
             setLoading(false);
         }
@@ -177,7 +180,22 @@ const CalculationView: React.FC = () => {
             </div>
 
             {/* Results */}
-            {result ? (
+            {loading ? (
+                <div className="space-y-4">
+                    {[...Array(3)].map((_, i) => (
+                        <div key={i} className="bg-dark-800 rounded-2xl border border-dark-700 p-4 space-y-4">
+                            <div className="flex justify-between items-center">
+                                <div className="space-y-2">
+                                    <Skeleton className="h-6 w-48" />
+                                    <Skeleton className="h-4 w-96" />
+                                </div>
+                                <Skeleton className="h-6 w-6 rounded-full" />
+                            </div>
+                            <Skeleton className="h-32 w-full rounded-xl" />
+                        </div>
+                    ))}
+                </div>
+            ) : result ? (
                 <div className="space-y-4">
                     {/* Step 1 */}
                     <StepCard stepKey="step1" step={result.step1_input}>

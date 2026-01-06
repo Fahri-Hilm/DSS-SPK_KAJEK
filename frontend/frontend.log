@@ -1,0 +1,16 @@
+nohup: ignoring input
+
+> spk-kajek-frontend@0.0.0 dev
+> vite
+
+
+  VITE v5.4.21  ready in 190 ms
+
+  ➜  Local:   http://localhost:5173/
+  ➜  Network: http://192.168.100.16:5173/
+  ➜  Network: http://172.18.0.1:5173/
+  ➜  Network: http://172.25.0.1:5173/
+  ➜  Network: http://172.16.238.1:5173/
+  ➜  Network: http://172.22.0.1:5173/
+  ➜  Network: http://172.20.0.1:5173/
+  ➜  Network: http://172.19.0.1:5173/

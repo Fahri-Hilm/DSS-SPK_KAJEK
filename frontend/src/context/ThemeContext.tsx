@@ -1,32 +1,47 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
-type Theme = 'dark' | 'light';
+type Theme = 'dark' | 'light' | 'blue';
 
 interface ThemeContextType {
     theme: Theme;
-    toggleTheme: () => void;
+    setTheme: (theme: Theme) => void;
+    toggleTheme: () => void; // Kept for backward compatibility if used elsewhere
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-    const [theme, setTheme] = useState<Theme>(() => {
+    const [theme, setThemeState] = useState<Theme>(() => {
         const saved = localStorage.getItem('theme');
         return (saved as Theme) || 'dark';
     });
 
     useEffect(() => {
         localStorage.setItem('theme', theme);
-        document.documentElement.classList.remove('dark', 'light');
-        document.documentElement.classList.add(theme);
+        const root = window.document.documentElement;
+
+        // Remove all previous theme classes
+        root.classList.remove('dark', 'light', 'blue-theme');
+
+        if (theme === 'dark') {
+            root.classList.add('dark');
+        } else if (theme === 'light') {
+            root.classList.add('light');
+        } else if (theme === 'blue') {
+            root.classList.add('dark', 'blue-theme'); // Blue utilizes dark mode base + overrides
+        }
     }, [theme]);
 
+    const setTheme = (t: Theme) => {
+        setThemeState(t);
+    };
+
     const toggleTheme = () => {
-        setTheme(prev => prev === 'dark' ? 'light' : 'dark');
+        setThemeState(prev => prev === 'dark' ? 'light' : 'dark');
     };
 
     return (
-        <ThemeContext.Provider value={{ theme, toggleTheme }}>
+        <ThemeContext.Provider value={{ theme, setTheme, toggleTheme }}>
             {children}
         </ThemeContext.Provider>
     );

@@ -2,10 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { api, DataItem } from '../services/api';
 import { Trophy, Sparkles, Activity, Server, DollarSign, ArrowRight, Zap, Info, Database } from 'lucide-react';
 import { clsx } from 'clsx';
-import { motion, animate } from 'framer-motion';
+import { motion, animate, AnimatePresence } from 'framer-motion';
 import LiquidLoader from './LiquidLoader';
 import ParticleBackground from './ParticleBackground';
 import AnimatedText from './AnimatedText';
+
 
 interface DashboardViewProps {
     onNavigate: (tab: string) => void;
@@ -45,7 +46,6 @@ const DashboardView: React.FC<DashboardViewProps> = ({ onNavigate }) => {
 
     return (
         <div className="relative min-h-[80vh] text-slate-100 overflow-visible">
-            {/* Removed internal ParticleBackground as it's now global or can stay if specific to dash */}
             {/* Keeping it for extra flair if desired, or relying on Layout's background */}
 
             <div className="relative z-10 w-full space-y-8 animate-in fade-in duration-700">
@@ -114,7 +114,7 @@ const DashboardView: React.FC<DashboardViewProps> = ({ onNavigate }) => {
                             </h3>
                             <button
                                 onClick={() => onNavigate('data')}
-                                className="text-sm font-semibold text-slate-400 hover:text-white transition-colors flex items-center gap-2 group px-3 py-1.5 rounded-lg hover:bg-white/5"
+                                className="text-sm font-semibold text-slate-400 hover:text-white transition-colors flex items-center gap-2 group px-3 py-1.5 rounded-lg hover:bg-white/5 cursor-pointer"
                             >
                                 View All
                                 <ArrowRight size={14} className="group-hover:translate-x-0.5 transition-transform" />
@@ -133,7 +133,7 @@ const DashboardView: React.FC<DashboardViewProps> = ({ onNavigate }) => {
                                 </thead>
                                 <tbody className="text-sm">
                                     {data.slice(0, 5).map((row, i) => (
-                                        <tr key={i} className="group hover:bg-white/5 transition-colors">
+                                        <tr key={i} className="group hover:bg-white/5 transition-colors cursor-pointer">
                                             <td className="p-4 font-medium text-slate-200 group-hover:text-blue-300 transition-colors">
                                                 {row.Vendor}
                                             </td>
@@ -179,7 +179,7 @@ const DashboardView: React.FC<DashboardViewProps> = ({ onNavigate }) => {
                                 </p>
 
                                 <button
-                                    className="w-full py-4 bg-white text-dark-900 rounded-xl font-bold shadow-xl shadow-blue-500/20 hover:shadow-blue-500/40 hover:scale-[1.02] transition-all flex items-center justify-center gap-3 group/btn relative overflow-hidden ring-2 ring-white/50 ring-offset-2 ring-offset-blue-600/20"
+                                    className="w-full py-4 bg-white text-dark-900 rounded-xl font-bold shadow-xl shadow-blue-500/20 hover:shadow-blue-500/40 hover:scale-[1.02] transition-all flex items-center justify-center gap-3 group/btn relative overflow-hidden ring-2 ring-white/50 ring-offset-2 ring-offset-blue-600/20 cursor-pointer"
                                     onClick={() => onNavigate('analysis')}
                                 >
                                     <div className="absolute inset-0 bg-gradient-to-r from-blue-100 to-white opacity-0 group-hover/btn:opacity-100 transition-opacity" />
